@@ -15,28 +15,35 @@
  */
 package com.example.restservice;
 
+// Imports para simular requisições HTTP no teste
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.Test;
+// Imports para testes unitários com JUnit 5
+import org.junit.jupiter.api.Test;// Indica que um método é um teste unitário do JUnit
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.beans.factory.annotation.Autowired; // Injeta automaticamente dependências gerenciadas pelo Spring
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc; // Configura automaticamente o MockMvc para testes
+import org.springframework.boot.test.context.SpringBootTest; // Carrega o contexto do Spring Boot para testes
+import org.springframework.test.web.servlet.MockMvc; // Classe usada para simular requisições HTTP e validar respostas nos testes
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest // Indica que o teste rodará dentro do contexto do Spring Boot
+
+
+
+@AutoConfigureMockMvc // Configura automaticamente o MockMvc para testar controllers sem um servidor real
 public class GreetingControllerTests {
 
-	@Autowired
+    @Autowired // Injeta automaticamente uma instância de MockMvc
 	private MockMvc mockMvc;
-/**
- * Este teste verifica se o endpoint /greeting retorna a mensagem padrão "Hello, World!" 
- * com um status HTTP 200 (OK).
- */
+	/**
+	 * Teste unitário para verificar o comportamento do endpoint /greeting 
+	 * quando nenhum parâmetro é fornecido. 
+	 * Espera-se que a resposta contenha a mensagem padrão "Hello, World!" 
+	 * e retorne o status HTTP 200 (OK).
+	 */
 	@Test
 	public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
 
@@ -44,9 +51,13 @@ public class GreetingControllerTests {
 				.andExpect(jsonPath("$.content").value("Hello, World!"));
 	}
 	/**
- * Este teste verifica se o endpoint /greeting retorna a mensagem padrão "Hello, World!" 
- * com um status HTTP 200 (OK).
- */
+	 * Teste unitário para validar o comportamento do endpoint /greeting 
+	 * quando um parâmetro "name" é passado na requisição.
+	 * Espera-se que a resposta contenha a mensagem "Hello, {name}!" 
+	 * substituindo "{name}" pelo valor passado no parâmetro.
+	 * Neste caso, o nome fornecido é "Spring Community", 
+	 * então a resposta esperada é "Hello, Spring Community!".
+	 */
 
 	@Test
 	public void paramGreetingShouldReturnTailoredMessage() throws Exception {
